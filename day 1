@@ -1,0 +1,146 @@
+class Solution {
+public:
+    vector<int> sortArray(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        return nums;
+    }
+};
+
+
+
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        multiset<int> numsSet;
+        for(int i=0;i<m;++i)
+         numsSet.insert(nums1[i]);
+        for(int i=0;i<n;++i)
+         numsSet.insert(nums2[i]);
+        auto iterBegin=numsSet.begin();
+        auto iterEnd=numsSet.end();
+        for(int i=0; iterBegin!=iterEnd;++iterBegin,++i)
+            nums1[i]=*iterBegin;
+    }
+};
+
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        if(nums[0]>=0){
+            for(int i=0; i<nums.size(); ++i){
+                nums[i] *= nums[i];
+            }
+            return nums;
+        }
+        if(nums[nums.size()-1]>=0){
+            int i=0;
+            for(;nums[i]<0;++i){
+                nums[i] *= nums[i];
+            }
+            int k=i;
+            --i;
+            vector<int> temp;
+            while(i>=0 && k<nums.size()){
+                    if(nums[k]*nums[k]>nums[i]){
+                        temp.push_back(nums[i--]);
+                    }else{
+                        nums[k] *= nums[k];
+                        temp.push_back(nums[k++]);
+                    }
+            }
+            while(i>=0){
+                temp.push_back(nums[i--]);
+            }
+            while(k<nums.size()){
+                nums[k] *= nums[k];
+                temp.push_back(nums[k++]);
+            }
+            return temp;
+        }
+        for(int i=0, j=nums.size()-1; i<=j; ++i,--j){
+            if(i==j){
+                nums[i] *= nums[i];
+                return nums;
+            }
+            nums[i] *= nums[i];
+            nums[j] *= nums[j];
+            swap(nums[i],nums[j]);
+        }
+        return nums;
+    }
+};
+
+
+
+class Solution {
+public:
+    vector<int> sortArrayByParity(vector<int>& A) {
+        int oddIndex=0;
+        for(int i=0; i< A.size();++i){
+            if(A[i]%2==0){
+                if(oddIndex!=i){
+                    swap(A[oddIndex++],A[i]);
+                }else{
+                    ++oddIndex;
+                }
+            }
+        }
+        return A;
+    }
+};
+
+
+class Solution {
+public:
+    vector<int> sortArrayByParityII(vector<int>& nums) {
+         for(int i=0;i<nums.size();++i){
+            if(i%2!=nums[i]%2){
+                for(int j=i+1; j<nums.size(); ++j){
+                    if(i%2==nums[j]%2){
+                        swap(nums[i],nums[j]);
+                        if((i+2)==j)
+                            ++i;
+                        break;
+                    }
+                }
+            }
+         }
+         return nums;
+    }
+};
+
+
+
+
+
+class Solution {
+public:
+    int minDeletionSize(vector<string>& strs) {
+        int count= 0;
+       for(int i=0; i<strs[0].size(); ++i){
+           for(int j=0; j<strs.size()-1; ++j){
+               if(strs[j][i]>strs[j+1][i]){
+                   ++count;
+                   break;
+               }
+           }
+               
+       }
+        return count;
+    }
+};
+
+
+
+
+class Solution {
+public:
+    int firstBadVersion(int n) {
+        while(0<n){
+            if(!isBadVersion(--n))
+                return ++n;
+        }
+        return 0;
+    }
+};
